@@ -1,53 +1,68 @@
-# Udagram Image Filtering Microservice
+# Udagram Microservices - (Udacity Cloud Developer Nanodegree)
 
-Udagram is a simple cloud application developed alongside the Udacity Cloud Engineering Nanodegree. It allows users to register and log into a web client, post photos to the feed, and process photos using an image filtering microservice.
+## Getting Started
+Udagram is a simple cloud application developed as one of the Udacity Cloud Engineering Nanodegree. The idea of the project is to design, deploy and operate a cloud native photo sharing application.
 
-The project is split into three parts:
-1. [The Simple Frontend](/udacity-c3-frontend)
-A basic Ionic client web application which consumes the RestAPI Backend. 
-2. [The RestAPI Feed Backend](/udacity-c3-restapi-feed), a Node-Express feed microservice.
-3. [The RestAPI User Backend](/udacity-c3-restapi-user), a Node-Express user microservice.
+### Requirement Tools:
+You need to install the following programs in your computer:  
+- [Docker](https://docs.docker.com/docker-for-mac/install/)  
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-macos.html)  
+- [Eksctl](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)  
+- [AWS-iam-authenticator](https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html)  
+- [Kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html)  
 
-## Getting Setup
+### Installation
+Check if your installation were successful with the following commands:  
+- `docker --version`  
+- `aws --version`  
+- `eksctl version`  
+- `kubectl version --short --client`  
+- `aws-iam-authenticator version`  
 
-> _tip_: this frontend is designed to work with the RestAPI backends). It is recommended you stand up the backend first, test using Postman, and then the frontend should integrate.
+![Setup Installed in my computer](screenshots/setting-installed.png)  
 
-### Installing Node and NPM
-This project depends on Nodejs and Node Package Manager (NPM). Before continuing, you must download and install Node (NPM is included) from [https://nodejs.com/en/download](https://nodejs.org/en/download/).
 
-### Installing Ionic Cli
-The Ionic Command Line Interface is required to serve and build the frontend. Instructions for installing the CLI can be found in the [Ionic Framework Docs](https://ionicframework.com/docs/installation/cli).
-
-### Installing project dependencies
-
-This project uses NPM to manage software dependencies. NPM Relies on the package.json file located in the root of this repository. After cloning, open your terminal and run:
-```bash
-npm install
+### Setup Environment Variables
+Open your terminal profile to store your application variables: 
 ```
->_tip_: **npm i** is shorthand for **npm install**
-
-### Setup Backend Node Environment
-You'll need to create a new node server. Open a new terminal within the project directory and run:
-1. Initialize a new project: `npm init`
-2. Install express: `npm i express --save`
-3. Install typescript dependencies: `npm i ts-node-dev tslint typescript  @types/bluebird @types/express @types/node --save-dev`
-4. Look at the `package.json` file from the RestAPI repo and copy the `scripts` block into the auto-generated `package.json` in this project. This will allow you to use shorthand commands like `npm run dev`
-
-
-### Configure The Backend Endpoint
-Ionic uses enviornment files located in `./src/enviornments/enviornment.*.ts` to load configuration variables at runtime. By default `environment.ts` is used for development and `enviornment.prod.ts` is used for produciton. The `apiHost` variable should be set to your server url either locally or in the cloud.
-
-***
-### Running the Development Server
-Ionic CLI provides an easy to use development server to run and autoreload the frontend. This allows you to make quick changes and see them in real time in your browser. To run the development server, open terminal and run:
-
-```bash
-ionic serve
+nano ~/.zshrc
+```
+Copy and paste the lines in your file with your values:
+```
+export POSTGRESS_USERNAME=(Username of the database);
+export POSTGRESS_PASSWORD=(Password of the database);
+export POSTGRESS_DB=(Name of the Database);
+export POSTGRESS_HOST=(URL Endpoint provided by AWS);
+export AWS_REGION=(Region where your database is hosted);
+export AWS_PROFILE=(Name of the IAM profile with correct access);
+export AWS_BUCKET=(Name of S3 bucket);
+export JWT_SECRET=(Random String to use JWT);
 ```
 
-### Building the Static Frontend Files
-Ionic CLI can build the frontend into static HTML/CSS/JavaScript files. These files can be uploaded to a host to be consumed by users on the web. Build artifacts are located in `./www`. To build from source, open terminal and run:
-```bash
-ionic build
 ```
-***
+source ~/.zshrc
+```
+
+*Note: I personally use ZSH terminal in case you use BASH terminal , you will need to enter those values in your `.bash_profile`*
+
+### Setup Docker Environment
+
+- First build the images: 
+  - `docker-compose -f docker-compose-build.yaml build --parallel`  
+  
+- Second list your docker images to check if they have been built:
+  - `docker images` 
+   
+![Build-images](screenshots/build-images.png)  
+
+- Third Run your docker containers: 
+  - `docker-compose up`
+  - To exit run `control + C`  
+
+![Running-containers](screenshots/running-images.png)  
+
+- Fourth push your docker images:
+  - `docker-compose -f docker-compose-build.yaml push`  
+  
+- Fifth check your Docker Hub account to check if the images were uploaded:
+![DockerHub](screenshots/docker-hub-published-images.png)  
