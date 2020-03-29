@@ -66,3 +66,49 @@ source ~/.zshrc
   
 - Fifth check your Docker Hub account to check if the images were uploaded:
 ![DockerHub](screenshots/docker-hub-published-images.png)  
+
+### Create a Kubernetes Cluster on Amazon EKS using eksctl
+Copy and paste the script bellow with your cluster name and configuration variables:
+
+```
+eksctl create cluster \ 
+--name udagram-microservices \
+--version 1.14 \
+--nodegroup-name standard-workers \
+--node-type t3.medium \
+--nodes 3 \
+--nodes-min 1 \
+--nodes-max 4 \
+--node-ami auto
+```
+
+![Creating Cluster](screenshots/creating-kubernete-cluster.png) 
+
+ ### Create Kubernetes Components (Configmaps and Secrets) and load secret values
+
+- First: encrypt your AWS file, database username and password using base64 using the following commands:
+  - `cat ~/.aws/credentials | base64`  
+  - `echo POSTGRESS_USERNAME | base64`  
+  - `echo POSTGRESS_PASSWORD | base64`  
+
+- Second: now add these values in your `env-secret.yaml`, `aws-secret.yaml`, and `env-configmap.yaml`.
+
+- Third: load secret files with following commands:
+  - `kubectl apply -f aws-secret.yaml`
+  - `kubectl apply -f env-secret.yaml`
+  - `kubectl apply -f env-configmap.yaml`
+  - `kubectl apply -f .`
+  
+![Loading Secrets](screenshots/loading-kubernetes-secrets.png) 
+
+### Application is monitored by Amazon CloudWatch
+
+To Enabling Control Plane Logs:
+  - Open the [Amazon-EKS](https://console.aws.amazon.com/eks/home#/clusters) console.
+  - Choose the name of your cluster to display cluster information.
+  - Under Logging, choose Update.
+  - For each individual log type, choose whether the log type should be Enabled or Disabled. By default, each log type is Disabled; choose  update to finish.
+
+![CLUSTERS-EKS](screenshots/aws-clusters.png)
+
+![AWS-CloudWatch](screenshots/aws-logging.png) 
