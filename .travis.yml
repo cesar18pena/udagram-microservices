@@ -17,3 +17,12 @@ before_install:
 
 install:
   - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel
+
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin ;
+    docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml push ;
+    fi
+
+notifications:
+  email: false
