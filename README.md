@@ -114,6 +114,6 @@ To enable Logs:
 
 ![AWS-CloudWatch](screenshots/aws-logging.png) 
 
-TravisCI (click icon to redirect to TravisCI webpage)
+### TravisCI (click icon to redirect to TravisCI webpage)
 
 [![Build Status](https://travis-ci.org/cesar18pena/udagram-microservices.svg?branch=master)](https://travis-ci.org/cesar18pena/udagram-microservices)
