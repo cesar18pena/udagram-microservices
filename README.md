@@ -103,6 +103,9 @@ eksctl create cluster \
   
 ![Loading Secrets](screenshots/loading-kubernetes-secrets.png) 
 
+Listing Pods
+![List Pods](screenshots/k8s-pods-running.png)
+
 ### Application is monitored by Amazon CloudWatch
 
 To enable Logs:
