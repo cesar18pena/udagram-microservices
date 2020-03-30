@@ -82,6 +82,8 @@ eksctl create cluster \
 --node-ami auto
 ```
 
+*Note*: I created the cluster with " " in the --name flag, but that should be without " " that the reason the name of the cluster is a random one created by AWS. 
+
 ![Creating Cluster](screenshots/creating-kubernete-cluster.png) 
 
  ### Create Kubernetes Components (Configmaps and Secrets) and load secret values
@@ -97,18 +99,21 @@ eksctl create cluster \
   - `kubectl apply -f aws-secret.yaml`
   - `kubectl apply -f env-secret.yaml`
   - `kubectl apply -f env-configmap.yaml`
-  - `kubectl apply -f .`
+  - *Note*: this command to applying to every file `kubectl apply -f .`
   
 ![Loading Secrets](screenshots/loading-kubernetes-secrets.png) 
 
 ### Application is monitored by Amazon CloudWatch
 
-To Enabling Control Plane Logs:
+To enable Logs:
   - Open the [Amazon-EKS](https://console.aws.amazon.com/eks/home#/clusters) console.
-  - Choose the name of your cluster to display cluster information.
-  - Under Logging, choose Update.
+  - Select name of the cluster you want to display information then under `Logging`, choose `Update`.
   - For each individual log type, choose whether the log type should be Enabled or Disabled. By default, each log type is Disabled; choose  update to finish.
 
 ![CLUSTERS-EKS](screenshots/aws-clusters.png)
 
 ![AWS-CloudWatch](screenshots/aws-logging.png) 
+
+TravisCI (click icon to redirect to TravisCI webpage)
+
+[![Build Status](https://travis-ci.org/cesar18pena/udagram-microservices.svg?branch=master)](https://travis-ci.org/cesar18pena/udagram-microservices)
